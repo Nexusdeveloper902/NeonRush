@@ -7,12 +7,12 @@
 
 #define PLAYER_ATTACK_RADIUS 20.0f
 #define ATTACK_COOLDOWN 0.5f
-#define MAX_ATTACK_CHARGE 2.0f    // Tiempo máximo para cargar el ataque (segundos)
+#define MAX_ATTACK_CHARGE 2.0f
 
 void CombatPlayerAttack(Player *player, Enemy *enemies, int numEnemies, int *score);
 void CombatPlayerUpdate(float deltaTime);
 void CombatPlayerChargeUpdate(float deltaTime);
-float GetPlayerAttackCharge();
+float GetPlayerAttackCharge(void);
 void CombatRenderFeedback(void);
 
 #endif // COMBAT_H

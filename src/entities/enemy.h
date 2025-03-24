@@ -8,13 +8,13 @@ typedef enum { PATROL, CHASE } EnemyState;
 typedef struct Enemy {
     Vector2 position;
     Vector2 velocity;
-    float vy;              // Velocidad vertical
+    float vy;
     float leftBound;
     float rightBound;
     float radius;
     EnemyState state;
-    int health;            // Salud del enemigo
-    bool isDead;           // Estado de muerte
+    int health;
+    bool isDead;
 } Enemy;
 
 #define ENEMY_PATROL_SPEED 100.0f

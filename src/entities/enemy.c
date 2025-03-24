@@ -12,12 +12,12 @@ void EnemyInit(Enemy *enemy, Vector2 position, float leftBound, float rightBound
     enemy->velocity = (Vector2){ENEMY_PATROL_SPEED, 0};
     enemy->vy = 0;
     enemy->state = PATROL;
-    enemy->health = 100;     // Salud inicial
-    enemy->isDead = false;   // No está muerto
+    enemy->health = 100;
+    enemy->isDead = false;
 }
 
 void EnemyUpdate(Enemy *enemy, Vector2 playerPosition, float deltaTime, float groundLevel) {
-    if (enemy->isDead) return;  // Si el enemigo está muerto, no se actualiza
+    if (enemy->isDead) return;
 
     float distToPlayer = Vector2Distance(enemy->position, playerPosition);
     enemy->state = (distToPlayer < ENEMY_DETECTION_RANGE) ? CHASE : PATROL;
@@ -46,6 +46,6 @@ void EnemyUpdate(Enemy *enemy, Vector2 playerPosition, float deltaTime, float gr
 }
 
 void EnemyRender(Enemy enemy) {
-    if (enemy.isDead) return;  // No se renderiza si está muerto
+    if (enemy.isDead) return;
     DrawCircleV(enemy.position, enemy.radius, RED);
 }

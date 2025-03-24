@@ -15,7 +15,6 @@ void PlayerInit(Player *player, Vector2 startPosition) {
 }
 
 void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTime, float groundLevel) {
-    // Activación del Grappling Hook con la tecla E
     if (IsKeyPressed(KEY_E) && !player->isDashing) {
         player->isGrappling = true;
         player->grappleAnchor = GetMousePosition();
@@ -66,7 +65,6 @@ void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTim
         }
     }
     else {
-        // Movimiento horizontal
         if (IsKeyDown(KEY_D))
             player->velocity.x = player->speed;
         else if (IsKeyDown(KEY_A))
@@ -74,7 +72,6 @@ void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTim
         else
             player->velocity.x = 0;
 
-        // Salto y doble salto
         if (IsKeyPressed(KEY_SPACE) && player->jumpCount < 2) {
             player->velocity.y = -JUMP_FORCE;
             player->jumpCount++;
@@ -82,7 +79,6 @@ void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTim
 
         player->velocity.y += GRAVITY * deltaTime;
 
-        // Resolver colisiones en eje X
         float oldX = player->position.x;
         player->position.x += player->velocity.x * deltaTime;
         for (int i = 0; i < numWalls; i++) {
@@ -92,7 +88,6 @@ void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTim
             }
         }
 
-        // Resolver colisiones en eje Y
         bool landed = false;
         float oldY = player->position.y;
         player->position.y += player->velocity.y * deltaTime;
@@ -118,7 +113,6 @@ void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTim
             player->isDashing = false;
         }
 
-        // Activar dash con LEFT CONTROL
         if (IsKeyPressed(KEY_LEFT_CONTROL) && player->dashCharges > 0) {
             player->isDashing = true;
             player->dashTimer = DASH_TIME;

@@ -3,7 +3,6 @@
 
 #include "raylib.h"
 
-// Constantes del jugador
 #define PLAYER_RADIUS 10
 #define GRAVITY 600.0f
 #define JUMP_FORCE 350.0f
