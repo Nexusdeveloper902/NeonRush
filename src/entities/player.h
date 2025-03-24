@@ -2,16 +2,7 @@
 #define PLAYER_H
 
 #include "raylib.h"
-
-#define PLAYER_RADIUS 10
-#define GRAVITY 600.0f
-#define JUMP_FORCE 350.0f
-#define DASH_SPEED 800.0f
-#define DASH_TIME 0.2f
-#define GRAPPLE_THRESHOLD 10
-#define GRAPPLE_ACCELERATION 1500.0f
-#define MAX_GRAPPLE_SPEED 1000.0f
-#define AIR_FRICTION 1.5f
+#include "../config/config.h"
 
 typedef struct Player {
     Vector2 position;

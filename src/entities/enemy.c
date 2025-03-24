@@ -12,7 +12,7 @@ void EnemyInit(Enemy *enemy, Vector2 position, float leftBound, float rightBound
     enemy->velocity = (Vector2){ENEMY_PATROL_SPEED, 0};
     enemy->vy = 0;
     enemy->state = PATROL;
-    enemy->health = 100;
+    enemy->health = ENEMY_INITIAL_HEALTH;
     enemy->isDead = false;
 }
 

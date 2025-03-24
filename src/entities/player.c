@@ -1,10 +1,11 @@
 #include "player.h"
 #include "raymath.h"
+#include <stddef.h>
 
 void PlayerInit(Player *player, Vector2 startPosition) {
     player->position = startPosition;
     player->velocity = (Vector2){0, 0};
-    player->speed = 200.0f;
+    player->speed = PLAYER_SPEED;
     player->dashCharges = 1;
     player->jumpCount = 0;
     player->isDashing = false;
@@ -15,6 +16,7 @@ void PlayerInit(Player *player, Vector2 startPosition) {
 }
 
 void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTime, float groundLevel) {
+    // Activar grappling hook con la tecla E
     if (IsKeyPressed(KEY_E) && !player->isDashing) {
         player->isGrappling = true;
         player->grappleAnchor = GetMousePosition();
@@ -23,28 +25,30 @@ void PlayerUpdate(Player *player, Rectangle *walls, int numWalls, float deltaTim
     if (player->isGrappling) {
         Vector2 toAnchor = Vector2Subtract(player->grappleAnchor, player->position);
         float distance = Vector2Length(toAnchor);
-        if (distance < GRAPPLE_THRESHOLD) {
-            player->isGrappling = false;
-        } else {
-            Vector2 dir = Vector2Normalize(toAnchor);
-            player->velocity = Vector2Add(player->velocity, Vector2Scale(dir, GRAPPLE_ACCELERATION * deltaTime));
-            float currentSpeed = Vector2Length(player->velocity);
-            if (currentSpeed > MAX_GRAPPLE_SPEED) {
-                player->velocity = Vector2Scale(Vector2Normalize(player->velocity), MAX_GRAPPLE_SPEED);
-            }
-            Vector2 newPos = Vector2Add(player->position, Vector2Scale(player->velocity, deltaTime));
-            bool collision = false;
+        // Para que el gancho no se desactive tan rápido, comentamos o modificamos esta línea:
+        // if(distance < GRAPPLE_THRESHOLD) { player->isGrappling = false; }
+        // Con esto, el grappling hook se mantendrá activo hasta que se cumpla otra condición (por ejemplo, colisión o cambio manual)
+
+        Vector2 dir = Vector2Normalize(toAnchor);
+        player->velocity = Vector2Add(player->velocity, Vector2Scale(dir, GRAPPLE_ACCELERATION * deltaTime));
+        float currentSpeed = Vector2Length(player->velocity);
+        if (currentSpeed > MAX_GRAPPLE_SPEED) {
+            player->velocity = Vector2Scale(Vector2Normalize(player->velocity), MAX_GRAPPLE_SPEED);
+        }
+        Vector2 newPos = Vector2Add(player->position, Vector2Scale(player->velocity, deltaTime));
+        bool collision = false;
+        if (walls != NULL && numWalls > 0) {
             for (int i = 0; i < numWalls; i++) {
                 if (CheckCollisionCircleRec(newPos, PLAYER_RADIUS, walls[i])) {
                     collision = true;
                     break;
                 }
             }
-            if (collision) {
-                player->isGrappling = false;
-            } else {
-                player->position = newPos;
-            }
+        }
+        if (collision) {
+            player->isGrappling = false;
+        } else {
+            player->position = newPos;
         }
     }
     else if (player->isDashing) {

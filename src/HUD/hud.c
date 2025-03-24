@@ -7,7 +7,7 @@ void HUDInit(HUD *hud) {
 }
 
 void HUDUpdate(HUD *hud, float deltaTime) {
-    // Actualizaciones adicionales para el HUD se pueden agregar aquí
+    // Actualizaciones del HUD (si es necesario)
 }
 
 void HUDRender(HUD hud) {
